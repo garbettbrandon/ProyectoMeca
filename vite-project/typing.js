@@ -29,7 +29,7 @@ const wpmTag = document.querySelector(".wpm span");
 const cpmTag = document.querySelector(".cpm span");
 
 let timer;
-let maxTime = 60;
+let maxTime = 30;
 let timeLeft = maxTime;
 let charIndex = 0;
 let mistakes = 0;
