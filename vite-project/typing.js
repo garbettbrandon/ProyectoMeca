@@ -27,6 +27,7 @@ const timeTag = document.querySelector(".time span b");
 const mistakeTag = document.querySelector(".mistake span");
 const wpmTag = document.querySelector(".wpm span");
 const cpmTag = document.querySelector(".cpm span");
+const timeItems = document.querySelectorAll(".seconds");
 
 let timer;
 let maxTime = 30;
@@ -104,13 +105,15 @@ function initTimer() {
 }
 
 function resetGame() {
-  loadParagraph();
-  clearInterval(timer);
-  timeLeft = maxTime;
-  charIndex = mistakes = isTyping = 0;
-  inpField.value = "";
-  timeTag.innerText = timeLeft;
-  wpmTag.innerText = 0;
+  loadParagraph(); // Cargar un nuevo párrafo
+  clearInterval(timer); // Detener cualquier temporizador activo
+  timeLeft = maxTime; // Usar el tiempo actualizado
+  charIndex = 0;
+  mistakes = 0;
+  isTyping = false;
+  inpField.value = ""; // Limpiar el campo de entrada
+  timeTag.innerText = timeLeft; // Mostrar el tiempo actualizado
+  wpmTag.innerText = 0; // Reiniciar estadísticas
   mistakeTag.innerText = 0;
   cpmTag.innerText = 0;
 }
@@ -118,3 +121,18 @@ function resetGame() {
 loadParagraph();
 inpField.addEventListener("input", initTyping);
 tryAgainBtn.addEventListener("click", resetGame);
+
+// Añadir eventos de clic a cada elemento <li>
+timeItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    // Obtener el tiempo del texto del elemento (eliminar "s" y convertir a número)
+    maxTime = parseInt(item.innerText.replace("s", ""));
+    resetGame(); // Reiniciar el juego con el nuevo tiempo
+
+    // Remover la clase 'active' de todos los elementos
+    timeItems.forEach((el) => el.classList.remove("active"));
+
+    // Añadir la clase 'active' al elemento seleccionado
+    item.classList.add("active");
+  });
+});
